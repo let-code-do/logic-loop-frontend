@@ -4,14 +4,14 @@ import { register } from '@antv/x6-react-shape';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
-import { 
+import {
   RefreshCw,
-  Search, 
-  Play, 
-  Square, 
-  CloudUpload, 
-  Plus, 
-  Settings, 
+  Search,
+  Play,
+  Square,
+  CloudUpload,
+  Plus,
+  Settings,
   Activity,
   Box,
   Timer,
@@ -24,6 +24,7 @@ import {
   ArrowDownRight,
   Equal,
   ChevronRight,
+  ChevronDown,
   ChevronLeft,
   ChevronRightSquare,
   ChevronLeftSquare,
@@ -89,7 +90,7 @@ const LogicNode: React.FC<{ node: X6Node }> = ({ node }) => {
   const data = node.getData();
   const selected = node.isNode() && node.getProp('selected');
   const IconComponent = ICON_MAP[data.iconName] || Box;
-  
+
   return (
     <div className={cn(
       "px-4 py-3 bg-surface-dark border rounded-lg shadow-xl min-w-[160px] h-full transition-all flex flex-col justify-center",
@@ -108,7 +109,7 @@ const LogicNode: React.FC<{ node: X6Node }> = ({ node }) => {
 const TimerNode: React.FC<{ node: X6Node }> = ({ node }) => {
   const data = node.getData();
   const selected = node.isNode() && node.getProp('selected');
-  
+
   return (
     <div className={cn(
       "px-4 py-3 bg-surface-dark border rounded-lg shadow-xl min-w-[200px] h-full transition-all flex flex-col justify-center",
@@ -140,7 +141,7 @@ const BlockNode: React.FC<{ node: X6Node }> = ({ node }) => {
   const data = node.getData();
   const selected = node.isNode() && node.getProp('selected');
   const IconComponent = ICON_MAP[data.iconName] || Box;
-  
+
   return (
     <div className={cn(
       "bg-surface-dark border rounded-lg shadow-xl min-w-[220px] h-full transition-all flex flex-col overflow-hidden",
@@ -172,33 +173,33 @@ register({
   component: LogicNode,
   ports: {
     groups: {
-      in: { 
-        position: 'left', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#007fff', 
-            strokeWidth: 2, 
-            fill: '#0f1923', 
+      in: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#007fff',
+            strokeWidth: 2,
+            fill: '#0f1923',
             'port-group': 'in',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
-      out: { 
-        position: 'right', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#38bdf8', 
-            strokeWidth: 3, 
-            fill: '#0f1923', 
+      out: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#38bdf8',
+            strokeWidth: 3,
+            fill: '#0f1923',
             'port-group': 'out',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
     },
     items: [{ group: 'in', id: 'in' }, { group: 'out', id: 'out' }],
@@ -212,33 +213,33 @@ register({
   component: TimerNode,
   ports: {
     groups: {
-      in: { 
-        position: 'left', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#007fff', 
-            strokeWidth: 2, 
-            fill: '#0f1923', 
+      in: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#007fff',
+            strokeWidth: 2,
+            fill: '#0f1923',
             'port-group': 'in',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
-      out: { 
-        position: 'right', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#38bdf8', 
-            strokeWidth: 3, 
-            fill: '#0f1923', 
+      out: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#38bdf8',
+            strokeWidth: 3,
+            fill: '#0f1923',
             'port-group': 'out',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
     },
     items: [{ group: 'in', id: 'in' }, { group: 'out', id: 'out' }],
@@ -252,33 +253,33 @@ register({
   component: BlockNode,
   ports: {
     groups: {
-      in: { 
-        position: 'left', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#007fff', 
-            strokeWidth: 2, 
-            fill: '#0f1923', 
+      in: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#007fff',
+            strokeWidth: 2,
+            fill: '#0f1923',
             'port-group': 'in',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
-      out: { 
-        position: 'right', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#38bdf8', 
-            strokeWidth: 3, 
-            fill: '#0f1923', 
+      out: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#38bdf8',
+            strokeWidth: 3,
+            fill: '#0f1923',
             'port-group': 'out',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
     },
     items: [
@@ -290,11 +291,29 @@ register({
   },
 });
 
+interface Tab {
+  id: string;
+  name: string;
+  graphData: any;
+}
+
 export const FlowEditor: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const graphRef = useRef<Graph | null>(null);
   const [selectedNode, setSelectedNode] = useState<X6Node | null>(null);
-  const [activeTab, setActiveTab] = useState('Main Logic');
+  const [tabs, setTabs] = useState<Tab[]>([
+    { id: '1', name: 'Main Logic', graphData: null }
+  ]);
+  const [activeTabId, setActiveTabId] = useState('1');
+  const [editingTabId, setEditingTabId] = useState<string | null>(null);
+  const [activeRightTab, setActiveRightTab] = useState<'properties' | 'debug'>('properties');
+  const [debugLogs, setDebugLogs] = useState<any[]>([
+    { id: 1, type: 'SCAN', time: '14:22:10.001', message: 'Scan loop #42901 initiated.' },
+    { id: 2, type: 'DIFF', time: '14:22:10.045', message: 'Memory address B0102 changed.', data: '{ "addr": "B0102", "old": 0, "new": 1, "type": "BIT", "src": "Internal Logic" }', addr: 'B0102' },
+    { id: 3, type: 'WARN', time: '14:22:10.112', message: "Threshold exceeded for 'MOTOR_1'." },
+    { id: 4, type: 'FAIL', time: '14:22:10.201', message: 'Write Timeout at R0045.' },
+    { id: 5, type: 'SCAN', time: '14:22:10.300', message: 'Scan loop #42902 initiated.' }
+  ]);
   const [isSaving, setIsSaving] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -334,14 +353,22 @@ export const FlowEditor: React.FC = () => {
       container: containerRef.current,
       grid: { size: 10, visible: true, type: 'dot', args: { color: '#333333', thickness: 1 } },
       background: { color: '#0f1923' },
-      panning: true,
+      panning: {
+        enabled: true,
+        modifiers: 'space',
+      },
       mousewheel: { enabled: true, modifiers: ['ctrl', 'meta'] },
       connecting: {
-        router: 'manhattan',
+        router: {
+          name: 'manhattan',
+          args: {
+            padding: 10,
+          },
+        },
         connector: { name: 'rounded', args: { radius: 10 } },
         anchor: 'center',
         connectionPoint: 'anchor',
-        allowBlank: false,
+        allowBlank: true,
         allowLoop: false,
         allowNode: false,
         allowEdge: false,
@@ -359,7 +386,8 @@ export const FlowEditor: React.FC = () => {
           return sourceGroup === 'out' && targetGroup === 'in';
         },
         createEdge() {
-          return new X6Edge({
+          return graph.createEdge({
+            shape: 'edge',
             attrs: {
               line: {
                 stroke: '#007fff',
@@ -401,7 +429,15 @@ export const FlowEditor: React.FC = () => {
     });
 
     // Plugins
-    graph.use(new Selection({ enabled: true, multiple: false, rubberband: true, showNodeSelectionBox: true }));
+    graph.use(
+      new Selection({
+        enabled: true,
+        rubberband: true,
+        multiple: true,
+        showNodeSelectionBox: true,
+        showEdgeSelectionBox: true,
+      })
+    );
     graph.use(new Snapline({ enabled: true }));
     // Disable resizing and rotating as per user request
     // graph.use(new Transform({ resizing: false, rotating: false })); 
@@ -411,7 +447,7 @@ export const FlowEditor: React.FC = () => {
     // Events
     graph.on('node:selected', ({ node }) => setSelectedNode(node));
     graph.on('node:unselected', () => setSelectedNode(null));
-    
+
     // Apply animation to new edges if running
     graph.on('edge:connected', ({ edge }) => {
       if (isRunning) {
@@ -420,16 +456,20 @@ export const FlowEditor: React.FC = () => {
       }
     });
 
+    graph.on('edge:dblclick', ({ edge }) => {
+      edge.remove()
+    })
+
     // Initial Data
     graph.addNode({
       id: '1',
       shape: 'logic-node',
       x: 100,
       y: 100,
-      data: { 
-        name: 'NO Contact', 
-        label: 'START_PB', 
-        iconName: 'ToggleRight', 
+      data: {
+        name: 'NO Contact',
+        label: 'START_PB',
+        iconName: 'ToggleRight',
         type: '접점',
         operation: '대상 비트가 true이면 통과',
         description: 'A접점. 가장 기본 조건'
@@ -441,9 +481,9 @@ export const FlowEditor: React.FC = () => {
       shape: 'timer-node',
       x: 400,
       y: 100,
-      data: { 
-        name: 'TON (On Delay)', 
-        preset: 5000, 
+      data: {
+        name: 'TON (On Delay)',
+        preset: 5000,
         acc: 2250,
         type: '타이머',
         operation: 'IN true 유지 시간 ≥ PT → Q true',
@@ -457,10 +497,79 @@ export const FlowEditor: React.FC = () => {
       attrs: { line: { stroke: '#007fff', strokeWidth: 2 } },
     });
 
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Delete') {
+        const cells = graph.getSelectedCells()
+        graph.removeCells(cells)
+      }
+    })
+
     return () => {
       graph.dispose();
     };
   }, []);
+
+  const handleTabChange = (tabId: string) => {
+    if (!graphRef.current || tabId === activeTabId) return;
+
+    // Save current graph data
+    const currentData = graphRef.current.toJSON();
+    setTabs(prev => prev.map(tab =>
+      tab.id === activeTabId ? { ...tab, graphData: currentData } : tab
+    ));
+
+    // Load new tab data
+    const targetTab = tabs.find(t => t.id === tabId);
+    if (targetTab) {
+      graphRef.current.fromJSON(targetTab.graphData || { nodes: [], edges: [] });
+      setActiveTabId(tabId);
+      setSelectedNode(null);
+    }
+  };
+
+  const addTab = () => {
+    const newId = Date.now().toString();
+    const newTab: Tab = {
+      id: newId,
+      name: `New Flow ${tabs.length + 1}`,
+      graphData: null
+    };
+
+    // Save current graph data first
+    if (graphRef.current) {
+      const currentData = graphRef.current.toJSON();
+      setTabs(prev => [...prev.map(tab =>
+        tab.id === activeTabId ? { ...tab, graphData: currentData } : tab
+      ), newTab]);
+    } else {
+      setTabs(prev => [...prev, newTab]);
+    }
+
+    setActiveTabId(newId);
+    graphRef.current?.fromJSON({ nodes: [], edges: [] });
+    setSelectedNode(null);
+  };
+
+  const renameTab = (id: string, newName: string) => {
+    setTabs(prev => prev.map(tab =>
+      tab.id === id ? { ...tab, name: newName } : tab
+    ));
+    setEditingTabId(null);
+  };
+
+  const deleteTab = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    if (tabs.length === 1) return; // Don't delete last tab
+
+    const newTabs = tabs.filter(t => t.id !== id);
+    setTabs(newTabs);
+
+    if (activeTabId === id) {
+      const nextTab = newTabs[0];
+      setActiveTabId(nextTab.id);
+      graphRef.current?.fromJSON(nextTab.graphData || { nodes: [], edges: [] });
+    }
+  };
 
   // Simulation effect
   useEffect(() => {
@@ -475,10 +584,43 @@ export const FlowEditor: React.FC = () => {
         edge.attr('line/style/animation', 'none');
       }
     });
+
+    let interval: any;
+    if (isRunning) {
+      interval = setInterval(() => {
+        const types = ['SCAN', 'DIFF', 'WARN'];
+        const type = types[Math.floor(Math.random() * types.length)];
+        const now = new Date();
+        const timeStr = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}.${now.getMilliseconds()}`;
+
+        const newLog: any = {
+          id: Date.now(),
+          type,
+          time: timeStr,
+          message: type === 'SCAN' ? `Scan loop #${Math.floor(Math.random() * 50000)} initiated.` :
+            type === 'DIFF' ? `Memory address B${Math.floor(Math.random() * 9000) + 1000} changed.` :
+              `Threshold check for motor ${Math.floor(Math.random() * 5) + 1} passed.`
+        };
+
+        if (type === 'DIFF') {
+          newLog.addr = `B${Math.floor(Math.random() * 9000) + 1000}`;
+          newLog.data = `{ "addr": "${newLog.addr}", "old": 0, "new": 1, "type": "BIT", "src": "Internal Logic" }`;
+        }
+
+        setDebugLogs(prev => [newLog, ...prev].slice(0, 50));
+      }, 2000);
+    }
+
+    return () => clearInterval(interval);
   }, [isRunning]);
 
   const onDragStart = (event: React.DragEvent, nodeMetadata: NodeMetadata) => {
     event.dataTransfer.setData('application/x6', JSON.stringify(nodeMetadata));
+
+    const el = event.currentTarget as HTMLElement
+    const rect = el.getBoundingClientRect()
+  
+    event.dataTransfer.setDragImage(el, rect.width / 2, rect.height / 2)
   };
 
   const onDrop = (event: React.DragEvent) => {
@@ -488,6 +630,8 @@ export const FlowEditor: React.FC = () => {
 
     const metadata: NodeMetadata = JSON.parse(rawData);
     const point = graphRef.current.clientToLocal(event.clientX, event.clientY);
+
+    console.log(metadata);
 
     const newNode = graphRef.current.addNode({
       shape: metadata.shape,
@@ -502,6 +646,12 @@ export const FlowEditor: React.FC = () => {
     });
 
     if (newNode) {
+      const size = newNode.getSize()      
+      newNode.position(
+        point.x - size.width / 2,
+        point.y - size.height / 2
+      )
+
       graphRef.current.resetSelection(newNode);
     }
   };
@@ -540,9 +690,9 @@ export const FlowEditor: React.FC = () => {
   const handleNodeMouseEnter = (e: React.MouseEvent, node: NodeMetadata) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setHoveredNode(node);
-    setTooltipPos({ 
-      top: rect.top, 
-      left: rect.right + 8 
+    setTooltipPos({
+      top: rect.top,
+      left: rect.right + 8
     });
   };
 
@@ -554,11 +704,11 @@ export const FlowEditor: React.FC = () => {
     <div className="flex h-full overflow-hidden relative">
       {/* Global Tooltip */}
       {hoveredNode && (
-        <div 
+        <div
           className="fixed z-[9999] w-72 p-4 bg-surface-dark border border-primary/40 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] pointer-events-none backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200"
-          style={{ 
-            top: `${tooltipPos.top}px`, 
-            left: `${tooltipPos.left}px` 
+          style={{
+            top: `${tooltipPos.top}px`,
+            left: `${tooltipPos.left}px`
           }}
         >
           <div className="flex items-center gap-2 mb-3 border-b border-border-dark pb-2">
@@ -595,7 +745,7 @@ export const FlowEditor: React.FC = () => {
       <aside className="w-72 border-r border-border-dark bg-background-dark flex flex-col shrink-0 relative z-40">
         <div className="p-4 border-b border-border-dark flex flex-col gap-3">
           <div className="flex gap-1.5">
-            <button 
+            <button
               onClick={() => setIsRunning(true)}
               className={cn(
                 "flex-1 flex items-center justify-center gap-1.5 py-2 rounded text-[10px] font-bold transition-all",
@@ -604,7 +754,7 @@ export const FlowEditor: React.FC = () => {
             >
               <Play className="size-3" /> RUN
             </button>
-            <button 
+            <button
               onClick={() => setIsRunning(false)}
               className={cn(
                 "flex-1 flex items-center justify-center gap-1.5 py-2 rounded border text-[10px] font-bold transition-all",
@@ -613,7 +763,7 @@ export const FlowEditor: React.FC = () => {
             >
               <Square className="size-3" /> STOP
             </button>
-            <button 
+            <button
               onClick={onSave}
               disabled={isSaving}
               className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-primary text-white rounded text-[10px] font-bold hover:brightness-110 transition-all disabled:opacity-50"
@@ -624,9 +774,9 @@ export const FlowEditor: React.FC = () => {
           </div>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-500" />
-            <input 
-              type="text" 
-              placeholder="Search nodes..." 
+            <input
+              type="text"
+              placeholder="Search nodes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-surface-dark border-none rounded-lg text-sm focus:ring-1 focus:ring-primary text-white"
@@ -635,22 +785,22 @@ export const FlowEditor: React.FC = () => {
         </div>
         <div className="p-4 flex-1 overflow-y-auto space-y-6 custom-scrollbar">
           {NODE_CATEGORIES.map((category, idx) => {
-            const filteredItems = category.items.filter(item => 
+            const filteredItems = category.items.filter(item =>
               item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
               item.type.toLowerCase().includes(searchQuery.toLowerCase())
             );
-            
+
             if (filteredItems.length === 0) return null;
 
             return (
-              <NodeCategory 
+              <NodeCategory
                 key={idx}
-                title={category.title} 
+                title={category.title}
                 onDragStart={onDragStart}
                 onDoubleClick={onDoubleClick}
                 onMouseEnter={handleNodeMouseEnter}
                 onMouseLeave={handleNodeMouseLeave}
-                items={filteredItems} 
+                items={filteredItems}
               />
             );
           })}
@@ -658,114 +808,219 @@ export const FlowEditor: React.FC = () => {
       </aside>
 
       <section className="flex-1 flex flex-col bg-background-dark relative z-10">
-        <div className="flex border-b border-border-dark bg-background-dark px-4 overflow-x-auto">
-          {['Main Logic', 'Motor Control', 'Safety System'].map(tab => (
-            <button 
-              key={tab}
-              onClick={() => setActiveTab(tab)}
+        <div className="flex border-b border-border-dark bg-background-dark px-4 overflow-x-auto items-center">
+          {tabs.map(tab => (
+            <div
+              key={tab.id}
               className={cn(
-                "flex items-center gap-2 px-4 py-3 border-b-2 text-sm font-bold whitespace-nowrap transition-all",
-                activeTab === tab ? "border-primary text-primary bg-primary/5" : "border-transparent text-slate-500 hover:text-slate-300"
+                "relative flex items-center gap-2 px-6 py-3 border-b-2 text-sm font-bold whitespace-nowrap transition-all group/tab",
+                activeTabId === tab.id ? "border-primary text-primary bg-primary/5" : "border-transparent text-slate-500 hover:text-slate-300"
               )}
             >
-              {tab}
-            </button>
+              {editingTabId === tab.id ? (
+                <input
+                  autoFocus
+                  className="bg-surface-dark border border-primary rounded px-1 py-0.5 text-xs focus:outline-none"
+                  defaultValue={tab.name}
+                  onBlur={(e) => renameTab(tab.id, e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') renameTab(tab.id, (e.target as HTMLInputElement).value);
+                    if (e.key === 'Escape') setEditingTabId(null);
+                  }}
+                />
+              ) : (
+                <>
+                  <span
+                    onClick={() => handleTabChange(tab.id)}
+                    onDoubleClick={() => setEditingTabId(tab.id)}
+                    className="cursor-pointer"
+                  >
+                    {tab.name}
+                  </span>
+                  {tabs.length > 1 && (
+                    <button
+                      onClick={(e) => deleteTab(e, tab.id)}
+                      className="absolute top-1 right-1 opacity-0 group-hover/tab:opacity-100 p-0.5 hover:bg-signal-error/20 rounded transition-all"
+                    >
+                      <X className="size-3 text-signal-error" />
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
           ))}
+          <button
+            onClick={addTab}
+            className="p-2 text-slate-500 hover:text-primary transition-colors ml-2"
+            title="Add new flow"
+          >
+            <Plus className="size-4" />
+          </button>
         </div>
 
-        <div 
-          ref={containerRef} 
-          className="flex-1 relative" 
-          onDragOver={(e) => e.preventDefault()} 
+        <div
+          ref={containerRef}
+          className="flex-1 relative"
+          onDragOver={(e) => e.preventDefault()}
           onDrop={onDrop}
         />
       </section>
 
       <aside className="w-80 border-l border-border-dark bg-background-dark flex flex-col shrink-0">
         <div className="flex border-b border-border-dark">
-          <button className="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary bg-primary/5">Properties</button>
-          <button className="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-300">Debug</button>
+          <button
+            onClick={() => setActiveRightTab('properties')}
+            className={cn(
+              "flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-all",
+              activeRightTab === 'properties' ? "text-primary border-b-2 border-primary bg-primary/5" : "text-slate-500 hover:text-slate-300 border-b-2 border-transparent"
+            )}
+          >
+            Properties
+          </button>
+          <button
+            onClick={() => setActiveRightTab('debug')}
+            className={cn(
+              "flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-all",
+              activeRightTab === 'debug' ? "text-primary border-b-2 border-primary bg-primary/5" : "text-slate-500 hover:text-slate-300 border-b-2 border-transparent"
+            )}
+          >
+            Debug
+          </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
-          {selectedNode ? (
-            <>
-              <section className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <Info className="size-4 text-primary" />
-                  <h4 className="text-xs font-bold text-primary uppercase tracking-wider">Node Information</h4>
+        <div className="flex-1 relative flex flex-col min-h-0">
+          {activeRightTab === 'debug' ? (
+            <div className="flex-1 flex flex-col bg-background-dark overflow-hidden">
+              <div className="flex-1 overflow-y-auto custom-scrollbar font-mono text-[10px] p-4 space-y-2">
+                {debugLogs.map((log) => (
+                  <div key={log.id}>
+                    {log.type === 'DIFF' ? (
+                      <div className="flex flex-col gap-1 px-2 py-1 rounded bg-emerald-500/5 hover:bg-emerald-500/10 border-l-2 border-emerald-500 cursor-pointer transition-colors">
+                        <div className="flex gap-2">
+                          <span className="text-slate-500 shrink-0">{log.time}</span>
+                          <span className="text-emerald-500 font-bold w-12 shrink-0 uppercase">[DIFF]</span>
+                          <span className="text-emerald-400">Memory address <span className="bg-emerald-500/20 px-1 rounded">{log.addr}</span> changed.</span>
+                        </div>
+                        <div className="text-[9px] text-slate-500 pl-14 whitespace-pre-wrap">
+                          {log.data}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={cn(
+                        "flex gap-2 px-2 py-1 rounded hover:bg-primary/5 group cursor-default",
+                        log.type === 'WARN' && "bg-amber-500/5 border-l-2 border-amber-500",
+                        log.type === 'FAIL' && "bg-red-500/5 border-l-2 border-red-500",
+                        log.type === 'SCAN' && ""
+                      )}>
+                        <span className="text-slate-500 shrink-0 select-none">{log.time}</span>
+                        <span className={cn(
+                          "font-bold w-12 shrink-0 uppercase",
+                          log.type === 'SCAN' && "text-blue-400",
+                          log.type === 'WARN' && "text-amber-500",
+                          log.type === 'FAIL' && "text-red-500"
+                        )}>[{log.type}]</span>
+                        <span className={cn(
+                          "text-slate-400",
+                          log.type === 'WARN' && "text-amber-400",
+                          log.type === 'FAIL' && "text-red-400"
+                        )}>{log.message}</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="p-4 border-t border-border-dark bg-background-dark/50">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase">Ingestion Rate</span>
+                  <span className="text-primary font-mono font-bold text-xs">1,248 l/s</span>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-[10px]">
-                    <span className="text-slate-500 uppercase font-bold">Type</span>
-                    <span className="text-slate-300">{selectedNode.getData().type}</span>
-                  </div>
-                  <div className="text-[10px]">
-                    <div className="text-slate-500 uppercase font-bold mb-1">Internal Operation</div>
-                    <div className="text-slate-300 leading-relaxed bg-black/20 p-2 rounded">{selectedNode.getData().operation}</div>
-                  </div>
-                  <div className="text-[10px]">
-                    <div className="text-slate-500 uppercase font-bold mb-1">Description</div>
-                    <div className="text-slate-400 italic leading-relaxed">{selectedNode.getData().description}</div>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">General Settings</h4>
-                <div className="space-y-4">
-                  <PropertyField 
-                    label="Display Label" 
-                    value={editingData?.label || editingData?.name || ''} 
-                    onChange={(val) => handlePropertyChange('label', val)}
-                  />
-                  <PropertyField label="Node ID" value={selectedNode.id} readOnly />
-                </div>
-              </section>
-              {(selectedNode.shape === 'timer-node' || selectedNode.getData().category === 'Timer') && (
-                <section>
-                  <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">Timer Parameters</h4>
-                  <div className="space-y-4">
-                    <PropertyField 
-                      label="Preset Value (ms)" 
-                      value={(editingData?.preset || 5000).toString()} 
-                      onChange={(val) => handlePropertyChange('preset', val)}
-                    />
-                    <div className="p-3 bg-black/20 rounded border border-border-dark">
-                      <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Accumulated (ACC)</div>
-                      <div className="text-xl font-mono text-primary font-bold">{editingData?.acc || 0} ms</div>
-                    </div>
-                  </div>
-                </section>
-              )}
-              <div className="pt-4 flex flex-col gap-2">
-                <button 
-                  onClick={applyChanges}
-                  className="w-full py-2.5 bg-primary text-white rounded font-bold text-sm shadow-lg shadow-primary/10 hover:brightness-110 transition-all"
-                >
-                  Apply Changes
-                </button>
-                <div className="flex gap-2">
-                  <button className="flex-1 py-2 bg-surface-dark text-slate-400 rounded border border-border-dark text-xs font-bold flex items-center justify-center gap-2 hover:text-white transition-colors">
-                    <Copy className="size-3" /> Duplicate
-                  </button>
-                  <button 
-                    onClick={() => {
-                      if (selectedNode) {
-                        graphRef.current?.removeCell(selectedNode);
-                        setSelectedNode(null);
-                      }
-                    }}
-                    className="flex-1 py-2 bg-surface-dark text-slate-400 rounded border border-border-dark text-xs font-bold flex items-center justify-center gap-2 hover:text-signal-error transition-colors"
-                  >
-                    <Trash2 className="size-3" /> Delete
-                  </button>
+                <div className="flex gap-1.5 pt-2">
+                  <button className="flex-1 py-2 bg-primary text-white rounded text-[10px] font-bold">PAUSE</button>
+                  <button className="flex-1 py-2 bg-surface-dark text-slate-400 border border-border-dark rounded text-[10px] font-bold">CLEAR</button>
                 </div>
               </div>
-            </>
+            </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center text-center p-8">
-              <Settings className="size-12 text-slate-700 mb-4" />
-              <p className="text-sm text-slate-500">Select a node to view and edit its properties</p>
+            <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar pb-32">
+              {selectedNode ? (
+                <>
+                  <section className="bg-primary/5 border border-primary/20 rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="size-4 text-primary" />
+                      <h4 className="text-xs font-bold text-primary uppercase tracking-wider">Node Information</h4>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-[10px]">
+                        <span className="text-slate-500 uppercase font-bold">Type</span>
+                        <span className="text-slate-300">{selectedNode.getData().type}</span>
+                      </div>
+                      <div className="text-[10px]">
+                        <div className="text-slate-500 uppercase font-bold mb-1">Internal Operation</div>
+                        <div className="text-slate-300 leading-relaxed bg-black/20 p-2 rounded">{selectedNode.getData().operation}</div>
+                      </div>
+                      <div className="text-[10px]">
+                        <div className="text-slate-500 uppercase font-bold mb-1">Description</div>
+                        <div className="text-slate-400 italic leading-relaxed">{selectedNode.getData().description}</div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section>
+                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">General Settings</h4>
+                    <div className="space-y-4">
+                      <PropertyField
+                        label="Display Label"
+                        value={editingData?.label || editingData?.name || ''}
+                        onChange={(val) => handlePropertyChange('label', val)}
+                      />
+                      <PropertyField label="Node ID" value={selectedNode.id} readOnly />
+                    </div>
+                  </section>
+                  {(selectedNode.shape === 'timer-node' || selectedNode.getData().category === 'Timer') && (
+                    <section>
+                      <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">Timer Parameters</h4>
+                      <div className="space-y-4">
+                        <PropertyField
+                          label="Preset Value (ms)"
+                          value={(editingData?.preset || 5000).toString()}
+                          onChange={(val) => handlePropertyChange('preset', val)}
+                        />
+                        <div className="p-3 bg-black/20 rounded border border-border-dark">
+                          <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Accumulated (ACC)</div>
+                          <div className="text-xl font-mono text-primary font-bold">{editingData?.acc || 0} ms</div>
+                        </div>
+                      </div>
+                    </section>
+                  )}
+                </>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center p-8">
+                  <Settings className="size-12 text-slate-700 mb-4" />
+                  <p className="text-sm text-slate-500">Select a node to view and edit its properties</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {selectedNode && (
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-background-dark border-t border-border-dark flex items-center gap-2">
+              <button
+                onClick={applyChanges}
+                className="flex-1 py-2.5 bg-primary text-white rounded font-bold text-sm shadow-lg shadow-primary/10 hover:brightness-110 transition-all"
+              >
+                Apply Changes
+              </button>
+              <button
+                onClick={() => {
+                  if (selectedNode) {
+                    graphRef.current?.removeCell(selectedNode);
+                    setSelectedNode(null);
+                  }
+                }}
+                className="p-2.5 bg-signal-error/10 text-signal-error rounded border border-signal-error/20 hover:bg-signal-error hover:text-white transition-all group"
+                title="Delete Node"
+              >
+                <Trash2 className="size-4" />
+              </button>
             </div>
           )}
         </div>
@@ -774,49 +1029,58 @@ export const FlowEditor: React.FC = () => {
   );
 };
 
-const NodeCategory: React.FC<{ 
-  title: string; 
-  items: NodeMetadata[]; 
+const NodeCategory: React.FC<{
+  title: string;
+  items: NodeMetadata[];
   onDragStart: (e: React.DragEvent, metadata: NodeMetadata) => void;
   onDoubleClick: (metadata: NodeMetadata) => void;
   onMouseEnter: (e: React.MouseEvent, metadata: NodeMetadata) => void;
   onMouseLeave: () => void;
-}> = ({ title, items, onDragStart, onDoubleClick, onMouseEnter, onMouseLeave }) => (
-  <div>
-    <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-3">
-      <Box className="size-3" />
-      {title}
-    </div>
-    <div className="grid grid-cols-1 gap-2">
-      {items.map((item, i) => (
-        <div 
-          key={i}
-          draggable
-          onDragStart={(e) => onDragStart(e, item)}
-          onDoubleClick={() => onDoubleClick(item)}
-          onMouseEnter={(e) => onMouseEnter(e, item)}
-          onMouseLeave={onMouseLeave}
-          className="flex items-center gap-3 p-3 bg-surface-dark/40 border border-border-dark rounded-lg cursor-grab hover:border-primary transition-all group active:cursor-grabbing select-none"
-        >
-          <item.icon className="size-4 text-primary shrink-0" />
-          <span className="text-sm font-medium text-slate-300 group-hover:text-white truncate">{item.name}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-);
+}> = ({ title, items, onDragStart, onDoubleClick, onMouseEnter, onMouseLeave }) => {
+  const [isOpen, setIsOpen] = useState(true);
 
-const PropertyField: React.FC<{ 
-  label: string; 
-  value: string; 
+  return (
+    <div>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-3 cursor-pointer hover:text-slate-300 transition-colors"
+      >
+        {isOpen ? <ChevronDown className="size-3" /> : <ChevronRight className="size-3" />}
+        {title}
+      </div>
+      {isOpen && (
+        <div className="grid grid-cols-1 gap-2">
+          {items.map((item, i) => (
+            <div
+              key={i}
+              draggable
+              onDragStart={(e) => onDragStart(e, item)}
+              onDoubleClick={() => onDoubleClick(item)}
+              onMouseEnter={(e) => onMouseEnter(e, item)}
+              onMouseLeave={onMouseLeave}
+              className="flex items-center gap-3 p-3 bg-surface-dark/40 border border-border-dark rounded-lg cursor-grab hover:border-primary transition-all group active:cursor-grabbing select-none"
+            >
+              <item.icon className="size-4 text-primary shrink-0" />
+              <span className="text-sm font-medium text-slate-300 group-hover:text-white truncate">{item.name}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const PropertyField: React.FC<{
+  label: string;
+  value: string;
   readOnly?: boolean;
   onChange?: (value: string) => void;
 }> = ({ label, value, readOnly, onChange }) => (
   <div>
     <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">{label}</label>
-    <input 
-      type="text" 
-      value={value} 
+    <input
+      type="text"
+      value={value}
       readOnly={readOnly}
       onChange={(e) => onChange?.(e.target.value)}
       className={cn(
