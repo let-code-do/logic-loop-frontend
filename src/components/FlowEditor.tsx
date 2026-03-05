@@ -307,6 +307,13 @@ export const FlowEditor: React.FC = () => {
   const [activeTabId, setActiveTabId] = useState('1');
   const [editingTabId, setEditingTabId] = useState<string | null>(null);
   const [activeRightTab, setActiveRightTab] = useState<'properties' | 'debug'>('properties');
+  const [debugLogs, setDebugLogs] = useState<any[]>([
+    { id: 1, type: 'SCAN', time: '14:22:10.001', message: 'Scan loop #42901 initiated.' },
+    { id: 2, type: 'DIFF', time: '14:22:10.045', message: 'Memory address B0102 changed.', data: '{ "addr": "B0102", "old": 0, "new": 1, "type": "BIT", "src": "Internal Logic" }', addr: 'B0102' },
+    { id: 3, type: 'WARN', time: '14:22:10.112', message: "Threshold exceeded for 'MOTOR_1'." },
+    { id: 4, type: 'FAIL', time: '14:22:10.201', message: 'Write Timeout at R0045.' },
+    { id: 5, type: 'SCAN', time: '14:22:10.300', message: 'Scan loop #42902 initiated.' }
+  ]);
   const [isSaving, setIsSaving] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -349,7 +356,12 @@ export const FlowEditor: React.FC = () => {
       panning: true,
       mousewheel: { enabled: true, modifiers: ['ctrl', 'meta'] },
       connecting: {
-        router: 'orth',
+        router: {
+          name: 'orth',
+          args: {
+            padding: 10,
+          },
+        },
         connector: { name: 'rounded', args: { radius: 10 } },
         anchor: 'center',
         connectionPoint: 'anchor',
@@ -361,13 +373,12 @@ export const FlowEditor: React.FC = () => {
         highlight: true,
         snap: { radius: 30 },
         validateMagnet({ magnet }) {
-          // Check if it's an output port by looking at our custom attribute
-          return magnet.getAttribute('port-group') === 'out';
+          const group = magnet.getAttribute('port-group') || magnet.getAttribute('group');
+          return group === 'out';
         },
         validateConnection({ sourceMagnet, targetMagnet }) {
-          // Only allow connection from 'out' group to 'in' group
-          const sourceGroup = sourceMagnet?.getAttribute('port-group');
-          const targetGroup = targetMagnet?.getAttribute('port-group');
+          const sourceGroup = sourceMagnet?.getAttribute('port-group') || sourceMagnet?.getAttribute('group');
+          const targetGroup = targetMagnet?.getAttribute('port-group') || targetMagnet?.getAttribute('group');
           return sourceGroup === 'out' && targetGroup === 'in';
         },
         createEdge() {
@@ -549,6 +560,34 @@ export const FlowEditor: React.FC = () => {
         edge.attr('line/style/animation', 'none');
       }
     });
+
+    let interval: any;
+    if (isRunning) {
+      interval = setInterval(() => {
+        const types = ['SCAN', 'DIFF', 'WARN'];
+        const type = types[Math.floor(Math.random() * types.length)];
+        const now = new Date();
+        const timeStr = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}.${now.getMilliseconds()}`;
+
+        const newLog: any = {
+          id: Date.now(),
+          type,
+          time: timeStr,
+          message: type === 'SCAN' ? `Scan loop #${Math.floor(Math.random() * 50000)} initiated.` :
+                   type === 'DIFF' ? `Memory address B${Math.floor(Math.random() * 9000) + 1000} changed.` :
+                   `Threshold check for motor ${Math.floor(Math.random() * 5) + 1} passed.`
+        };
+
+        if (type === 'DIFF') {
+          newLog.addr = `B${Math.floor(Math.random() * 9000) + 1000}`;
+          newLog.data = `{ "addr": "${newLog.addr}", "old": 0, "new": 1, "type": "BIT", "src": "Internal Logic" }`;
+        }
+
+        setDebugLogs(prev => [newLog, ...prev].slice(0, 50));
+      }, 2000);
+    }
+
+    return () => clearInterval(interval);
   }, [isRunning]);
 
   const onDragStart = (event: React.DragEvent, nodeMetadata: NodeMetadata) => {
@@ -815,36 +854,42 @@ export const FlowEditor: React.FC = () => {
           {activeRightTab === 'debug' ? (
             <div className="flex-1 flex flex-col bg-background-dark overflow-hidden">
               <div className="flex-1 overflow-y-auto custom-scrollbar font-mono text-[10px] p-4 space-y-2">
-                <div className="flex gap-2 px-2 py-1 rounded hover:bg-primary/5 group cursor-default">
-                  <span className="text-slate-500 shrink-0 select-none">14:22:10.001</span>
-                  <span className="text-blue-400 font-bold w-12 shrink-0 uppercase">[SCAN]</span>
-                  <span className="text-slate-400">Scan loop #42901 initiated.</span>
-                </div>
-                <div className="flex flex-col gap-1 px-2 py-1 rounded bg-emerald-500/5 hover:bg-emerald-500/10 border-l-2 border-emerald-500 cursor-pointer transition-colors">
-                  <div className="flex gap-2">
-                    <span className="text-slate-500 shrink-0">14:22:10.045</span>
-                    <span className="text-emerald-500 font-bold w-12 shrink-0 uppercase">[DIFF]</span>
-                    <span className="text-emerald-400">Memory address <span className="bg-emerald-500/20 px-1 rounded">B0102</span> changed.</span>
+                {debugLogs.map((log) => (
+                  <div key={log.id}>
+                    {log.type === 'DIFF' ? (
+                      <div className="flex flex-col gap-1 px-2 py-1 rounded bg-emerald-500/5 hover:bg-emerald-500/10 border-l-2 border-emerald-500 cursor-pointer transition-colors">
+                        <div className="flex gap-2">
+                          <span className="text-slate-500 shrink-0">{log.time}</span>
+                          <span className="text-emerald-500 font-bold w-12 shrink-0 uppercase">[DIFF]</span>
+                          <span className="text-emerald-400">Memory address <span className="bg-emerald-500/20 px-1 rounded">{log.addr}</span> changed.</span>
+                        </div>
+                        <div className="text-[9px] text-slate-500 pl-14 whitespace-pre-wrap">
+                          {log.data}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={cn(
+                        "flex gap-2 px-2 py-1 rounded hover:bg-primary/5 group cursor-default",
+                        log.type === 'WARN' && "bg-amber-500/5 border-l-2 border-amber-500",
+                        log.type === 'FAIL' && "bg-red-500/5 border-l-2 border-red-500",
+                        log.type === 'SCAN' && ""
+                      )}>
+                        <span className="text-slate-500 shrink-0 select-none">{log.time}</span>
+                        <span className={cn(
+                          "font-bold w-12 shrink-0 uppercase",
+                          log.type === 'SCAN' && "text-blue-400",
+                          log.type === 'WARN' && "text-amber-500",
+                          log.type === 'FAIL' && "text-red-500"
+                        )}>[{log.type}]</span>
+                        <span className={cn(
+                          "text-slate-400",
+                          log.type === 'WARN' && "text-amber-400",
+                          log.type === 'FAIL' && "text-red-400"
+                        )}>{log.message}</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="text-[9px] text-slate-500 pl-14">
-                    {'{ "addr": "B0102", "old": 0, "new": 1, "type": "BIT", "src": "Internal Logic" }'}
-                  </div>
-                </div>
-                <div className="flex gap-2 px-2 py-1 rounded bg-amber-500/5 hover:bg-amber-500/10 border-l-2 border-amber-500 group cursor-default">
-                  <span className="text-slate-500 shrink-0 select-none">14:22:10.112</span>
-                  <span className="text-amber-500 font-bold w-12 shrink-0 uppercase">[WARN]</span>
-                  <span className="text-amber-400">Threshold exceeded for 'MOTOR_1'.</span>
-                </div>
-                <div className="flex gap-2 px-2 py-1 rounded bg-red-500/5 hover:bg-red-500/10 border-l-2 border-red-500 group cursor-default">
-                  <span className="text-slate-500 shrink-0 select-none">14:22:10.201</span>
-                  <span className="text-red-500 font-bold w-12 shrink-0 uppercase">[FAIL]</span>
-                  <span className="text-red-400">Write Timeout at R0045.</span>
-                </div>
-                <div className="flex gap-2 px-2 py-1 rounded hover:bg-primary/5 group cursor-default">
-                  <span className="text-slate-500 shrink-0 select-none">14:22:10.300</span>
-                  <span className="text-blue-400 font-bold w-12 shrink-0 uppercase">[SCAN]</span>
-                  <span className="text-slate-400">Scan loop #42902 initiated.</span>
-                </div>
+                ))}
               </div>
               <div className="p-4 border-t border-border-dark bg-background-dark/50">
                 <div className="flex items-center justify-between mb-3">
