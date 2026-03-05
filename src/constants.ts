@@ -1,12 +1,12 @@
-import { 
-  ToggleRight, 
-  ToggleLeft, 
-  ArrowUpRight, 
-  ArrowDownRight, 
-  Equal, 
-  ChevronRight, 
-  ChevronLeft, 
-  ChevronRightSquare, 
+import {
+  ToggleRight,
+  ToggleLeft,
+  ArrowUpRight,
+  ArrowDownRight,
+  Equal,
+  ChevronRight,
+  ChevronLeft,
+  ChevronRightSquare,
   ChevronLeftSquare,
   Binary,
   Timer,
@@ -38,6 +38,7 @@ export interface NodeMetadata {
   iconName: string;
   category: string;
   shape: 'logic-node' | 'timer-node' | 'block-node';
+  ports: [];
 }
 
 export const NODE_CATEGORIES = [
@@ -52,7 +53,13 @@ export const NODE_CATEGORIES = [
         icon: ToggleRight,
         iconName: 'ToggleRight',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In', tooltip: '입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'NC Contact',
@@ -62,7 +69,13 @@ export const NODE_CATEGORIES = [
         icon: ToggleLeft,
         iconName: 'ToggleLeft',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In', tooltip: '입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'Rising Edge Contact',
@@ -72,7 +85,13 @@ export const NODE_CATEGORIES = [
         icon: ArrowUpRight,
         iconName: 'ArrowUpRight',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In', tooltip: '입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'Falling Edge Contact',
@@ -82,7 +101,13 @@ export const NODE_CATEGORIES = [
         icon: ArrowDownRight,
         iconName: 'ArrowDownRight',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In', tooltip: '입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'Equal Compare Contact',
@@ -92,7 +117,14 @@ export const NODE_CATEGORIES = [
         icon: Equal,
         iconName: 'Equal',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In_A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'In_B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'Greater Compare Contact',
@@ -102,7 +134,14 @@ export const NODE_CATEGORIES = [
         icon: ChevronRight,
         iconName: 'ChevronRight',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In_A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'In_B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'Less Compare Contact',
@@ -112,7 +151,14 @@ export const NODE_CATEGORIES = [
         icon: ChevronLeft,
         iconName: 'ChevronLeft',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In_A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'In_B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'GreaterEqual Contact',
@@ -122,7 +168,14 @@ export const NODE_CATEGORIES = [
         icon: ChevronRightSquare,
         iconName: 'ChevronRightSquare',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In_A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'In_B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'LessEqual Contact',
@@ -132,7 +185,14 @@ export const NODE_CATEGORIES = [
         icon: ChevronLeftSquare,
         iconName: 'ChevronLeftSquare',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In_A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'In_B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'BitMask Contact',
@@ -142,7 +202,14 @@ export const NODE_CATEGORIES = [
         icon: Binary,
         iconName: 'Binary',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'In_A', tooltip: 'Value', isReadOnly: true },
+            { group: 'in', id: 'In_B', tooltip: 'Mask', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: 'Out', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'Timer Done Contact',
@@ -152,7 +219,13 @@ export const NODE_CATEGORIES = [
         icon: Timer,
         iconName: 'Timer',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'TimerDone', tooltip: '타이머 완료 입력', isReadOnly: true },
+            { group: 'out', id: 'ContactOut', tooltip: '접점 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'Counter Done Contact',
@@ -162,7 +235,13 @@ export const NODE_CATEGORIES = [
         icon: Hash,
         iconName: 'Hash',
         category: 'Contact',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'TimerDone', tooltip: '카운터 완료 입력', isReadOnly: true },
+            { group: 'out', id: 'ContactOut', tooltip: '접점 출력', isReadOnly: true },
+          ]
+        },
       }
     ]
   },
@@ -177,7 +256,12 @@ export const NODE_CATEGORIES = [
         icon: Circle,
         iconName: 'Circle',
         category: 'Output',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'CoilIn', tooltip: '접점 신호 입력', isReadOnly: true }, // 코일 동작 조건
+          ]
+        },
       },
       {
         name: 'Inverted Coil',
@@ -187,7 +271,12 @@ export const NODE_CATEGORIES = [
         icon: CircleOff,
         iconName: 'CircleOff',
         category: 'Output',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'CoilIn', tooltip: '접점 신호 입력', isReadOnly: true }, // 코일 동작 조건
+          ]
+        },
       },
       {
         name: 'Set Coil (Latch)',
@@ -197,7 +286,12 @@ export const NODE_CATEGORIES = [
         icon: Lock,
         iconName: 'Lock',
         category: 'Output',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'CoilIn', tooltip: '접점 신호 입력', isReadOnly: true }, // 코일 동작 조건
+          ]
+        },
       },
       {
         name: 'Reset Coil',
@@ -207,7 +301,12 @@ export const NODE_CATEGORIES = [
         icon: Unlock,
         iconName: 'Unlock',
         category: 'Output',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'CoilIn', tooltip: '접점 신호 입력', isReadOnly: true }, // 코일 동작 조건
+          ]
+        },
       },
       {
         name: 'Toggle Coil',
@@ -217,7 +316,12 @@ export const NODE_CATEGORIES = [
         icon: RefreshCw,
         iconName: 'RefreshCw',
         category: 'Output',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'CoilIn', tooltip: '접점 신호 입력', isReadOnly: true }, // 코일 동작 조건
+          ]
+        },
       },
       {
         name: 'Pulse Coil',
@@ -227,7 +331,12 @@ export const NODE_CATEGORIES = [
         icon: Zap,
         iconName: 'Zap',
         category: 'Output',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'CoilIn', tooltip: '접점 신호 입력', isReadOnly: true }, // 코일 동작 조건
+          ]
+        },
       }
     ]
   },
@@ -242,7 +351,15 @@ export const NODE_CATEGORIES = [
         icon: Timer,
         iconName: 'Timer',
         category: 'Timer',
-        shape: 'timer-node'
+        shape: 'timer-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'Start', tooltip: '타이머 시작 입력', isReadOnly: true },
+            { group: 'in', id: 'Reset', tooltip: '타이머 리셋 입력', isReadOnly: true },
+            { group: 'out', id: 'Done', tooltip: '타이머 완료 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'TOF (Off Delay)',
@@ -252,7 +369,15 @@ export const NODE_CATEGORIES = [
         icon: Timer,
         iconName: 'Timer',
         category: 'Timer',
-        shape: 'timer-node'
+        shape: 'timer-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'Start', tooltip: '타이머 시작 입력', isReadOnly: true },
+            { group: 'in', id: 'Reset', tooltip: '타이머 리셋 입력', isReadOnly: true },
+            { group: 'out', id: 'Done', tooltip: '타이머 완료 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'TP (Pulse Timer)',
@@ -262,7 +387,15 @@ export const NODE_CATEGORIES = [
         icon: Zap,
         iconName: 'Zap',
         category: 'Timer',
-        shape: 'timer-node'
+        shape: 'timer-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'Start', tooltip: '타이머 시작 입력', isReadOnly: true },
+            { group: 'in', id: 'Reset', tooltip: '타이머 리셋 입력', isReadOnly: true },
+            { group: 'out', id: 'Done', tooltip: '타이머 완료 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       }
     ]
   },
@@ -277,7 +410,15 @@ export const NODE_CATEGORIES = [
         icon: Activity,
         iconName: 'Activity',
         category: 'Counter',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'Start', tooltip: '카운터 시작 입력', isReadOnly: true },
+            { group: 'in', id: 'Reset', tooltip: '카운터 리셋 입력', isReadOnly: true },
+            { group: 'out', id: 'Done', tooltip: '카운터 완료 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'CTD (Down Counter)',
@@ -287,7 +428,15 @@ export const NODE_CATEGORIES = [
         icon: Activity,
         iconName: 'Activity',
         category: 'Counter',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'Start', tooltip: '카운터 시작 입력', isReadOnly: true },
+            { group: 'in', id: 'Reset', tooltip: '카운터 리셋 입력', isReadOnly: true },
+            { group: 'out', id: 'Done', tooltip: '카운터 완료 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'CTUD',
@@ -297,7 +446,15 @@ export const NODE_CATEGORIES = [
         icon: Activity,
         iconName: 'Activity',
         category: 'Counter',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'Start', tooltip: '카운터 시작 입력', isReadOnly: true },
+            { group: 'in', id: 'Reset', tooltip: '카운터 리셋 입력', isReadOnly: true },
+            { group: 'out', id: 'Done', tooltip: '카운터 완료 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       }
     ]
   },
@@ -312,7 +469,14 @@ export const NODE_CATEGORIES = [
         icon: ArrowRightLeft,
         iconName: 'ArrowRightLeft',
         category: 'Data',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'Source', tooltip: '복사할 값 입력', isReadOnly: true },
+            { group: 'out', id: 'Destination', tooltip: '복사된 값 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'ADD',
@@ -322,7 +486,15 @@ export const NODE_CATEGORIES = [
         icon: Plus,
         iconName: 'Plus',
         category: 'Data',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '연산 결과 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'SUB',
@@ -332,7 +504,15 @@ export const NODE_CATEGORIES = [
         icon: Minus,
         iconName: 'Minus',
         category: 'Data',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '연산 결과 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'MUL',
@@ -342,7 +522,15 @@ export const NODE_CATEGORIES = [
         icon: X,
         iconName: 'X',
         category: 'Data',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '연산 결과 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'DIV',
@@ -352,7 +540,15 @@ export const NODE_CATEGORIES = [
         icon: Divide,
         iconName: 'Divide',
         category: 'Data',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '연산 결과 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'MOD',
@@ -362,7 +558,15 @@ export const NODE_CATEGORIES = [
         icon: Percent,
         iconName: 'Percent',
         category: 'Data',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '연산 결과 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       },
       {
         name: 'Comparator Block',
@@ -372,8 +576,20 @@ export const NODE_CATEGORIES = [
         icon: Columns,
         iconName: 'Columns',
         category: 'Data',
-        shape: 'logic-node'
+        shape: 'logic-node',
+        ports: {
+          items: [
+            { group: 'in', id: 'A', tooltip: 'A 입력', isReadOnly: true },
+            { group: 'in', id: 'B', tooltip: 'B 입력', isReadOnly: true },
+            { group: 'out', id: 'Out', tooltip: '연산 결과 출력', isReadOnly: true },
+            { group: 'error', id: 'Error', tooltip: '오류 출력', isReadOnly: true },
+          ]
+        },
       }
     ]
+  },
+  {
+    title: 'Custom Blocks',
+    items: []
   }
 ];

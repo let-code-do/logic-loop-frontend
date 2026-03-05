@@ -12,8 +12,8 @@ import {
   Edit2,
   Copy
 } from 'lucide-react';
-import { cn } from '../utils';
-import { Variable } from '../types';
+import { cn } from '../utils.js';
+import type { Variable } from '../types.js';
 
 const mockVariables: Variable[] = [
   { id: '1', name: 'Main_Motor_Run', address: 'B0102', type: 'BIT', value: true, description: 'Main drive motor activation signal' },
@@ -132,7 +132,7 @@ export const Variables: React.FC = () => {
             <tbody className="divide-y divide-border-dark/50">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="py-20 text-center text-slate-500 font-mono text-sm">
+                  <td colSpan={7} className="py-20 text-center text-slate-500 text-sm">
                     <div className="flex flex-col items-center gap-4">
                       <RefreshCw className="size-8 animate-spin text-primary/40" />
                       LOADING MEMORY MAP...
@@ -148,7 +148,7 @@ export const Variables: React.FC = () => {
                       <Copy className="size-3 text-slate-600 opacity-0 group-hover:opacity-100 cursor-pointer" />
                     </div>
                   </td>
-                  <td className="py-3 px-4 text-sm font-mono text-slate-400">{v.address}</td>
+                  <td className="py-3 px-4 text-sm text-slate-400">{v.address}</td>
                   <td className="py-3 px-4">
                     <span className={cn(
                       "text-[10px] font-bold px-2 py-0.5 rounded uppercase",
@@ -166,7 +166,7 @@ export const Variables: React.FC = () => {
                         {v.value ? 'TRUE' : 'FALSE'}
                       </div>
                     ) : (
-                      <span className="text-sm font-mono text-slate-100">{v.value}</span>
+                      <span className="text-sm text-slate-100">{v.value}</span>
                     )}
                   </td>
                   <td className="py-3 px-4 text-sm text-slate-500 max-w-xs truncate">{v.description}</td>

@@ -4,14 +4,13 @@ import {
   Share2, 
   Database, 
   Cpu, 
-  Search, 
   Bell, 
   User,
   Activity,
   Zap
 } from 'lucide-react';
-import { cn } from '../utils';
-import { ViewType } from '../types';
+import { cn } from '../utils.js';
+import type { ViewType } from '../types.js';
 
 interface HeaderProps {
   activeView: ViewType;
