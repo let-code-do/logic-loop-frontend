@@ -4,14 +4,14 @@ import { register } from '@antv/x6-react-shape';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Transform } from '@antv/x6-plugin-transform';
-import { 
+import {
   RefreshCw,
-  Search, 
-  Play, 
-  Square, 
-  CloudUpload, 
-  Plus, 
-  Settings, 
+  Search,
+  Play,
+  Square,
+  CloudUpload,
+  Plus,
+  Settings,
   Activity,
   Box,
   Timer,
@@ -90,7 +90,7 @@ const LogicNode: React.FC<{ node: X6Node }> = ({ node }) => {
   const data = node.getData();
   const selected = node.isNode() && node.getProp('selected');
   const IconComponent = ICON_MAP[data.iconName] || Box;
-  
+
   return (
     <div className={cn(
       "px-4 py-3 bg-surface-dark border rounded-lg shadow-xl min-w-[160px] h-full transition-all flex flex-col justify-center",
@@ -109,7 +109,7 @@ const LogicNode: React.FC<{ node: X6Node }> = ({ node }) => {
 const TimerNode: React.FC<{ node: X6Node }> = ({ node }) => {
   const data = node.getData();
   const selected = node.isNode() && node.getProp('selected');
-  
+
   return (
     <div className={cn(
       "px-4 py-3 bg-surface-dark border rounded-lg shadow-xl min-w-[200px] h-full transition-all flex flex-col justify-center",
@@ -141,7 +141,7 @@ const BlockNode: React.FC<{ node: X6Node }> = ({ node }) => {
   const data = node.getData();
   const selected = node.isNode() && node.getProp('selected');
   const IconComponent = ICON_MAP[data.iconName] || Box;
-  
+
   return (
     <div className={cn(
       "bg-surface-dark border rounded-lg shadow-xl min-w-[220px] h-full transition-all flex flex-col overflow-hidden",
@@ -173,33 +173,33 @@ register({
   component: LogicNode,
   ports: {
     groups: {
-      in: { 
-        position: 'left', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#007fff', 
-            strokeWidth: 2, 
-            fill: '#0f1923', 
+      in: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#007fff',
+            strokeWidth: 2,
+            fill: '#0f1923',
             'port-group': 'in',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
-      out: { 
-        position: 'right', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#38bdf8', 
-            strokeWidth: 3, 
-            fill: '#0f1923', 
+      out: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#38bdf8',
+            strokeWidth: 3,
+            fill: '#0f1923',
             'port-group': 'out',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
     },
     items: [{ group: 'in', id: 'in' }, { group: 'out', id: 'out' }],
@@ -213,33 +213,33 @@ register({
   component: TimerNode,
   ports: {
     groups: {
-      in: { 
-        position: 'left', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#007fff', 
-            strokeWidth: 2, 
-            fill: '#0f1923', 
+      in: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#007fff',
+            strokeWidth: 2,
+            fill: '#0f1923',
             'port-group': 'in',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
-      out: { 
-        position: 'right', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#38bdf8', 
-            strokeWidth: 3, 
-            fill: '#0f1923', 
+      out: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#38bdf8',
+            strokeWidth: 3,
+            fill: '#0f1923',
             'port-group': 'out',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
     },
     items: [{ group: 'in', id: 'in' }, { group: 'out', id: 'out' }],
@@ -253,33 +253,33 @@ register({
   component: BlockNode,
   ports: {
     groups: {
-      in: { 
-        position: 'left', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#007fff', 
-            strokeWidth: 2, 
-            fill: '#0f1923', 
+      in: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#007fff',
+            strokeWidth: 2,
+            fill: '#0f1923',
             'port-group': 'in',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
-      out: { 
-        position: 'right', 
-        attrs: { 
-          circle: { 
-            r: 7, 
-            magnet: true, 
-            stroke: '#38bdf8', 
-            strokeWidth: 3, 
-            fill: '#0f1923', 
+      out: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 7,
+            magnet: true,
+            stroke: '#38bdf8',
+            strokeWidth: 3,
+            fill: '#0f1923',
             'port-group': 'out',
             style: { cursor: 'crosshair' }
-          } 
-        } 
+          }
+        }
       },
     },
     items: [
@@ -353,11 +353,14 @@ export const FlowEditor: React.FC = () => {
       container: containerRef.current,
       grid: { size: 10, visible: true, type: 'dot', args: { color: '#333333', thickness: 1 } },
       background: { color: '#0f1923' },
-      panning: true,
+      panning: {
+        enabled: true,
+        modifiers: 'space',
+      },
       mousewheel: { enabled: true, modifiers: ['ctrl', 'meta'] },
       connecting: {
         router: {
-          name: 'orth',
+          name: 'manhattan',
           args: {
             padding: 10,
           },
@@ -373,16 +376,18 @@ export const FlowEditor: React.FC = () => {
         highlight: true,
         snap: { radius: 30 },
         validateMagnet({ magnet }) {
-          const group = magnet.getAttribute('port-group') || magnet.getAttribute('group');
-          return group === 'out';
+          // Check if it's an output port by looking at our custom attribute
+          return magnet.getAttribute('port-group') === 'out';
         },
         validateConnection({ sourceMagnet, targetMagnet }) {
-          const sourceGroup = sourceMagnet?.getAttribute('port-group') || sourceMagnet?.getAttribute('group');
-          const targetGroup = targetMagnet?.getAttribute('port-group') || targetMagnet?.getAttribute('group');
+          // Only allow connection from 'out' group to 'in' group
+          const sourceGroup = sourceMagnet?.getAttribute('port-group');
+          const targetGroup = targetMagnet?.getAttribute('port-group');
           return sourceGroup === 'out' && targetGroup === 'in';
         },
         createEdge() {
-          return new X6Edge({
+          return graph.createEdge({
+            shape: 'edge',
             attrs: {
               line: {
                 stroke: '#007fff',
@@ -424,7 +429,15 @@ export const FlowEditor: React.FC = () => {
     });
 
     // Plugins
-    graph.use(new Selection({ enabled: true, multiple: false, rubberband: true, showNodeSelectionBox: true }));
+    graph.use(
+      new Selection({
+        enabled: true,
+        rubberband: true,
+        multiple: true,
+        showNodeSelectionBox: true,
+        showEdgeSelectionBox: true,
+      })
+    );
     graph.use(new Snapline({ enabled: true }));
     // Disable resizing and rotating as per user request
     // graph.use(new Transform({ resizing: false, rotating: false })); 
@@ -434,7 +447,7 @@ export const FlowEditor: React.FC = () => {
     // Events
     graph.on('node:selected', ({ node }) => setSelectedNode(node));
     graph.on('node:unselected', () => setSelectedNode(null));
-    
+
     // Apply animation to new edges if running
     graph.on('edge:connected', ({ edge }) => {
       if (isRunning) {
@@ -443,16 +456,20 @@ export const FlowEditor: React.FC = () => {
       }
     });
 
+    graph.on('edge:dblclick', ({ edge }) => {
+      edge.remove()
+    })
+
     // Initial Data
     graph.addNode({
       id: '1',
       shape: 'logic-node',
       x: 100,
       y: 100,
-      data: { 
-        name: 'NO Contact', 
-        label: 'START_PB', 
-        iconName: 'ToggleRight', 
+      data: {
+        name: 'NO Contact',
+        label: 'START_PB',
+        iconName: 'ToggleRight',
         type: '접점',
         operation: '대상 비트가 true이면 통과',
         description: 'A접점. 가장 기본 조건'
@@ -464,9 +481,9 @@ export const FlowEditor: React.FC = () => {
       shape: 'timer-node',
       x: 400,
       y: 100,
-      data: { 
-        name: 'TON (On Delay)', 
-        preset: 5000, 
+      data: {
+        name: 'TON (On Delay)',
+        preset: 5000,
         acc: 2250,
         type: '타이머',
         operation: 'IN true 유지 시간 ≥ PT → Q true',
@@ -479,6 +496,13 @@ export const FlowEditor: React.FC = () => {
       target: { cell: '2', port: 'in' },
       attrs: { line: { stroke: '#007fff', strokeWidth: 2 } },
     });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Delete') {
+        const cells = graph.getSelectedCells()
+        graph.removeCells(cells)
+      }
+    })
 
     return () => {
       graph.dispose();
@@ -574,8 +598,8 @@ export const FlowEditor: React.FC = () => {
           type,
           time: timeStr,
           message: type === 'SCAN' ? `Scan loop #${Math.floor(Math.random() * 50000)} initiated.` :
-                   type === 'DIFF' ? `Memory address B${Math.floor(Math.random() * 9000) + 1000} changed.` :
-                   `Threshold check for motor ${Math.floor(Math.random() * 5) + 1} passed.`
+            type === 'DIFF' ? `Memory address B${Math.floor(Math.random() * 9000) + 1000} changed.` :
+              `Threshold check for motor ${Math.floor(Math.random() * 5) + 1} passed.`
         };
 
         if (type === 'DIFF') {
@@ -592,6 +616,11 @@ export const FlowEditor: React.FC = () => {
 
   const onDragStart = (event: React.DragEvent, nodeMetadata: NodeMetadata) => {
     event.dataTransfer.setData('application/x6', JSON.stringify(nodeMetadata));
+
+    const el = event.currentTarget as HTMLElement
+    const rect = el.getBoundingClientRect()
+  
+    event.dataTransfer.setDragImage(el, rect.width / 2, rect.height / 2)
   };
 
   const onDrop = (event: React.DragEvent) => {
@@ -601,6 +630,8 @@ export const FlowEditor: React.FC = () => {
 
     const metadata: NodeMetadata = JSON.parse(rawData);
     const point = graphRef.current.clientToLocal(event.clientX, event.clientY);
+
+    console.log(metadata);
 
     const newNode = graphRef.current.addNode({
       shape: metadata.shape,
@@ -615,6 +646,12 @@ export const FlowEditor: React.FC = () => {
     });
 
     if (newNode) {
+      const size = newNode.getSize()      
+      newNode.position(
+        point.x - size.width / 2,
+        point.y - size.height / 2
+      )
+
       graphRef.current.resetSelection(newNode);
     }
   };
@@ -653,9 +690,9 @@ export const FlowEditor: React.FC = () => {
   const handleNodeMouseEnter = (e: React.MouseEvent, node: NodeMetadata) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setHoveredNode(node);
-    setTooltipPos({ 
-      top: rect.top, 
-      left: rect.right + 8 
+    setTooltipPos({
+      top: rect.top,
+      left: rect.right + 8
     });
   };
 
@@ -667,11 +704,11 @@ export const FlowEditor: React.FC = () => {
     <div className="flex h-full overflow-hidden relative">
       {/* Global Tooltip */}
       {hoveredNode && (
-        <div 
+        <div
           className="fixed z-[9999] w-72 p-4 bg-surface-dark border border-primary/40 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.5)] pointer-events-none backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200"
-          style={{ 
-            top: `${tooltipPos.top}px`, 
-            left: `${tooltipPos.left}px` 
+          style={{
+            top: `${tooltipPos.top}px`,
+            left: `${tooltipPos.left}px`
           }}
         >
           <div className="flex items-center gap-2 mb-3 border-b border-border-dark pb-2">
@@ -708,7 +745,7 @@ export const FlowEditor: React.FC = () => {
       <aside className="w-72 border-r border-border-dark bg-background-dark flex flex-col shrink-0 relative z-40">
         <div className="p-4 border-b border-border-dark flex flex-col gap-3">
           <div className="flex gap-1.5">
-            <button 
+            <button
               onClick={() => setIsRunning(true)}
               className={cn(
                 "flex-1 flex items-center justify-center gap-1.5 py-2 rounded text-[10px] font-bold transition-all",
@@ -717,7 +754,7 @@ export const FlowEditor: React.FC = () => {
             >
               <Play className="size-3" /> RUN
             </button>
-            <button 
+            <button
               onClick={() => setIsRunning(false)}
               className={cn(
                 "flex-1 flex items-center justify-center gap-1.5 py-2 rounded border text-[10px] font-bold transition-all",
@@ -726,7 +763,7 @@ export const FlowEditor: React.FC = () => {
             >
               <Square className="size-3" /> STOP
             </button>
-            <button 
+            <button
               onClick={onSave}
               disabled={isSaving}
               className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-primary text-white rounded text-[10px] font-bold hover:brightness-110 transition-all disabled:opacity-50"
@@ -737,9 +774,9 @@ export const FlowEditor: React.FC = () => {
           </div>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-500" />
-            <input 
-              type="text" 
-              placeholder="Search nodes..." 
+            <input
+              type="text"
+              placeholder="Search nodes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-surface-dark border-none rounded-lg text-sm focus:ring-1 focus:ring-primary text-white"
@@ -748,22 +785,22 @@ export const FlowEditor: React.FC = () => {
         </div>
         <div className="p-4 flex-1 overflow-y-auto space-y-6 custom-scrollbar">
           {NODE_CATEGORIES.map((category, idx) => {
-            const filteredItems = category.items.filter(item => 
+            const filteredItems = category.items.filter(item =>
               item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
               item.type.toLowerCase().includes(searchQuery.toLowerCase())
             );
-            
+
             if (filteredItems.length === 0) return null;
 
             return (
-              <NodeCategory 
+              <NodeCategory
                 key={idx}
-                title={category.title} 
+                title={category.title}
                 onDragStart={onDragStart}
                 onDoubleClick={onDoubleClick}
                 onMouseEnter={handleNodeMouseEnter}
                 onMouseLeave={handleNodeMouseLeave}
-                items={filteredItems} 
+                items={filteredItems}
               />
             );
           })}
@@ -821,10 +858,10 @@ export const FlowEditor: React.FC = () => {
           </button>
         </div>
 
-        <div 
-          ref={containerRef} 
-          className="flex-1 relative" 
-          onDragOver={(e) => e.preventDefault()} 
+        <div
+          ref={containerRef}
+          className="flex-1 relative"
+          onDragOver={(e) => e.preventDefault()}
           onDrop={onDrop}
         />
       </section>
@@ -906,55 +943,55 @@ export const FlowEditor: React.FC = () => {
             <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar pb-32">
               {selectedNode ? (
                 <>
-                <section className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Info className="size-4 text-primary" />
-                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider">Node Information</h4>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-[10px]">
-                      <span className="text-slate-500 uppercase font-bold">Type</span>
-                      <span className="text-slate-300">{selectedNode.getData().type}</span>
+                  <section className="bg-primary/5 border border-primary/20 rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Info className="size-4 text-primary" />
+                      <h4 className="text-xs font-bold text-primary uppercase tracking-wider">Node Information</h4>
                     </div>
-                    <div className="text-[10px]">
-                      <div className="text-slate-500 uppercase font-bold mb-1">Internal Operation</div>
-                      <div className="text-slate-300 leading-relaxed bg-black/20 p-2 rounded">{selectedNode.getData().operation}</div>
-                    </div>
-                    <div className="text-[10px]">
-                      <div className="text-slate-500 uppercase font-bold mb-1">Description</div>
-                      <div className="text-slate-400 italic leading-relaxed">{selectedNode.getData().description}</div>
-                    </div>
-                  </div>
-                </section>
-
-                <section>
-                  <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">General Settings</h4>
-                  <div className="space-y-4">
-                    <PropertyField 
-                      label="Display Label"
-                      value={editingData?.label || editingData?.name || ''}
-                      onChange={(val) => handlePropertyChange('label', val)}
-                    />
-                    <PropertyField label="Node ID" value={selectedNode.id} readOnly />
-                  </div>
-                </section>
-                {(selectedNode.shape === 'timer-node' || selectedNode.getData().category === 'Timer') && (
-                  <section>
-                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">Timer Parameters</h4>
-                    <div className="space-y-4">
-                      <PropertyField
-                        label="Preset Value (ms)"
-                        value={(editingData?.preset || 5000).toString()}
-                        onChange={(val) => handlePropertyChange('preset', val)}
-                      />
-                      <div className="p-3 bg-black/20 rounded border border-border-dark">
-                        <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Accumulated (ACC)</div>
-                        <div className="text-xl font-mono text-primary font-bold">{editingData?.acc || 0} ms</div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-[10px]">
+                        <span className="text-slate-500 uppercase font-bold">Type</span>
+                        <span className="text-slate-300">{selectedNode.getData().type}</span>
+                      </div>
+                      <div className="text-[10px]">
+                        <div className="text-slate-500 uppercase font-bold mb-1">Internal Operation</div>
+                        <div className="text-slate-300 leading-relaxed bg-black/20 p-2 rounded">{selectedNode.getData().operation}</div>
+                      </div>
+                      <div className="text-[10px]">
+                        <div className="text-slate-500 uppercase font-bold mb-1">Description</div>
+                        <div className="text-slate-400 italic leading-relaxed">{selectedNode.getData().description}</div>
                       </div>
                     </div>
                   </section>
-                )}
-              </>
+
+                  <section>
+                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">General Settings</h4>
+                    <div className="space-y-4">
+                      <PropertyField
+                        label="Display Label"
+                        value={editingData?.label || editingData?.name || ''}
+                        onChange={(val) => handlePropertyChange('label', val)}
+                      />
+                      <PropertyField label="Node ID" value={selectedNode.id} readOnly />
+                    </div>
+                  </section>
+                  {(selectedNode.shape === 'timer-node' || selectedNode.getData().category === 'Timer') && (
+                    <section>
+                      <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">Timer Parameters</h4>
+                      <div className="space-y-4">
+                        <PropertyField
+                          label="Preset Value (ms)"
+                          value={(editingData?.preset || 5000).toString()}
+                          onChange={(val) => handlePropertyChange('preset', val)}
+                        />
+                        <div className="p-3 bg-black/20 rounded border border-border-dark">
+                          <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Accumulated (ACC)</div>
+                          <div className="text-xl font-mono text-primary font-bold">{editingData?.acc || 0} ms</div>
+                        </div>
+                      </div>
+                    </section>
+                  )}
+                </>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center text-center p-8">
                   <Settings className="size-12 text-slate-700 mb-4" />
@@ -992,9 +1029,9 @@ export const FlowEditor: React.FC = () => {
   );
 };
 
-const NodeCategory: React.FC<{ 
-  title: string; 
-  items: NodeMetadata[]; 
+const NodeCategory: React.FC<{
+  title: string;
+  items: NodeMetadata[];
   onDragStart: (e: React.DragEvent, metadata: NodeMetadata) => void;
   onDoubleClick: (metadata: NodeMetadata) => void;
   onMouseEnter: (e: React.MouseEvent, metadata: NodeMetadata) => void;
@@ -1033,17 +1070,17 @@ const NodeCategory: React.FC<{
   );
 };
 
-const PropertyField: React.FC<{ 
-  label: string; 
-  value: string; 
+const PropertyField: React.FC<{
+  label: string;
+  value: string;
   readOnly?: boolean;
   onChange?: (value: string) => void;
 }> = ({ label, value, readOnly, onChange }) => (
   <div>
     <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">{label}</label>
-    <input 
-      type="text" 
-      value={value} 
+    <input
+      type="text"
+      value={value}
       readOnly={readOnly}
       onChange={(e) => onChange?.(e.target.value)}
       className={cn(
