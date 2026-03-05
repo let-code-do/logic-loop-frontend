@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Play, Pause, Square, Download, Clock, AlertCircle, CheckCircle2, Search } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
-import { cn } from '../utils';
-import { BuildExportModal } from './BuildExportModal';
-import { Project } from '../types';
+import { Play, Pause, Square, Download, Clock, Search } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { cn } from '../utils.js';
+import { BuildExportModal } from './BuildExportModal.js';
+import type { Project } from '../types.js';
 
 const mockProjects: Project[] = [
   {
@@ -75,7 +75,7 @@ const getProjectLogs = (project: Project): LogData[] => {
 export const Dashboard: React.FC = () => {
   const [isBuildModalOpen, setIsBuildModalOpen] = useState(false);
   const [projects, setProjects] = useState<Project[]>(mockProjects);
-  const [selectedProjectId, setSelectedProjectId] = useState<string>(mockProjects[0].id);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>(mockProjects[0]?.id || '1');
   const [searchQuery, setSearchQuery] = useState('');
   const [simulationTime, setSimulationTime] = useState(0); // in seconds
   const [simulationPace, setSimulationPace] = useState(1.0);
@@ -86,19 +86,19 @@ export const Dashboard: React.FC = () => {
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const timelineData = generateMockTimelineData(selectedProject.id);
-  const projectLogs = getProjectLogs(selectedProject);
+  const timelineData = selectedProject ? generateMockTimelineData(selectedProject.id) : [];
+  const projectLogs = selectedProject ? getProjectLogs(selectedProject) : [];
 
   // Simulation loop
   React.useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (selectedProject.status === 'running') {
+    if (selectedProject?.status === 'running') {
       interval = setInterval(() => {
         setSimulationTime(prev => prev + (0.1 * simulationPace));
       }, 100);
     }
-    return () => clearInterval(interval);
-  }, [selectedProject.status, simulationPace]);
+    return () => clearInterval(interval!);
+  }, [selectedProject?.status, simulationPace]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -121,12 +121,12 @@ export const Dashboard: React.FC = () => {
   };
 
   const handleStep = () => {
-    if (selectedProject.status !== 'running') {
+    if (selectedProject?.status !== 'running') {
       setSimulationTime(prev => prev + 1);
     }
   };
 
-  const displayDuration = selectedProject.status === 'running' ? formatTime(simulationTime) : selectedProject.duration;
+  const displayDuration = selectedProject?.status === 'running' ? formatTime(simulationTime) : (selectedProject?.duration || '00:00.00');
 
   return (
     <div className="flex h-full overflow-hidden">
@@ -195,7 +195,7 @@ export const Dashboard: React.FC = () => {
                 onClick={handleStop}
                 className={cn(
                   "p-2 transition-colors",
-                  selectedProject.status === 'stopped' ? "text-primary" : "text-slate-400 hover:text-primary"
+                  selectedProject?.status === 'stopped' ? "text-primary" : "text-slate-400 hover:text-primary"
                 )}
               >
                 <Square className="size-5" />
@@ -204,7 +204,7 @@ export const Dashboard: React.FC = () => {
                 onClick={handleRun}
                 className={cn(
                   "p-3 rounded-lg shadow-lg transition-all",
-                  selectedProject.status === 'running'
+                  selectedProject?.status === 'running'
                     ? "bg-signal-active text-white animate-pulse"
                     : "bg-primary text-white hover:bg-primary/90"
                 )}
@@ -245,8 +245,8 @@ export const Dashboard: React.FC = () => {
           </div>
 
           <div className="text-right">
-            <div className="text-3xl font-mono text-primary font-bold">{displayDuration}</div>
-            <div className="text-[10px] text-slate-500 font-mono uppercase">Scenario: {selectedProject.name}</div>
+            <div className="text-3xl text-primary font-bold">{displayDuration}</div>
+            <div className="text-[10px] text-slate-500 uppercase">Scenario: {selectedProject?.name}</div>
           </div>
         </div>
 
@@ -254,7 +254,7 @@ export const Dashboard: React.FC = () => {
         <div className="flex-1 overflow-auto custom-scrollbar relative timeline-grid">
           <div className="h-8 border-b border-border-dark flex sticky top-0 bg-background-dark z-10">
             <div className="w-48 shrink-0 border-r border-border-dark flex items-center px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Channel / Tag</div>
-            <div className="flex-1 flex font-mono text-[10px] text-slate-500">
+            <div className="flex-1 flex text-[10px] text-slate-500">
               {['00:00', '01:00', '02:00', '03:00', '04:00', '05:00'].map(t => (
                 <div key={t} className={cn("w-40 border-r border-border-dark/50 flex items-center justify-center", t === '03:00' && "text-primary font-bold bg-primary/5")}>{t}</div>
               ))}
@@ -297,21 +297,21 @@ export const Dashboard: React.FC = () => {
             <div className="space-y-3">
               <ProgressStat
                 label="Sync Tolerance"
-                value={selectedProject.status === 'error' ? 45 : 95}
-                color={selectedProject.status === 'error' ? "bg-signal-error" : "bg-signal-active"}
-                subValue={selectedProject.status === 'error' ? "±0.85s" : "±0.02s"}
+                value={selectedProject?.status === 'error' ? 45 : 95}
+                color={selectedProject?.status === 'error' ? "bg-signal-error" : "bg-signal-active"}
+                subValue={selectedProject?.status === 'error' ? "±0.85s" : "±0.02s"}
               />
               <ProgressStat
                 label="Value Accuracy"
-                value={selectedProject.status === 'error' ? 62 : 92}
-                color={selectedProject.status === 'error' ? "bg-signal-error" : "bg-warning-orange"}
-                subValue={selectedProject.status === 'error' ? "62.1%" : "92.4%"}
+                value={selectedProject?.status === 'error' ? 62 : 92}
+                color={selectedProject?.status === 'error' ? "bg-signal-error" : "bg-warning-orange"}
+                subValue={selectedProject?.status === 'error' ? "62.1%" : "92.4%"}
               />
             </div>
           </div>
           <div className="flex-1 p-4 overflow-hidden flex flex-col">
             <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Live Log Stream</h4>
-            <div className="flex-1 font-mono text-[11px] space-y-1 overflow-y-auto custom-scrollbar text-slate-400">
+            <div className="flex-1 text-[11px] space-y-1 overflow-y-auto custom-scrollbar text-slate-400">
                 {projectLogs.map((log, idx) => (
                   <LogEntry key={idx} {...log} />
                 ))}
@@ -368,11 +368,12 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   );
 };
 
+// @ts-ignore
 const ChartSection: React.FC<{ title: string; type: 'bit' | 'analog'; data: any[] }> = ({ title, type, data }) => (
   <div className="space-y-2">
     <div className="flex items-center justify-between px-2">
       <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{title}</h4>
-      <span className="text-[10px] font-mono text-primary">LIVE</span>
+      <span className="text-[10px] text-primary">LIVE</span>
     </div>
     <div className="h-40 bg-surface-dark/10 border border-border-dark rounded-xl p-4 timeline-grid">
       <ResponsiveContainer width="100%" height="100%">
