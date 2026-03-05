@@ -375,5 +375,9 @@ export const NODE_CATEGORIES = [
         shape: 'logic-node'
       }
     ]
+  },
+  {
+    title: 'Custom Blocks',
+    items: []
   }
 ];

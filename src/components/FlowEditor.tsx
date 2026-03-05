@@ -24,6 +24,7 @@ import {
   ArrowDownRight,
   Equal,
   ChevronRight,
+  ChevronDown,
   ChevronLeft,
   ChevronRightSquare,
   ChevronLeftSquare,
@@ -290,11 +291,21 @@ register({
   },
 });
 
+interface Tab {
+  id: string;
+  name: string;
+  graphData: any;
+}
+
 export const FlowEditor: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const graphRef = useRef<Graph | null>(null);
   const [selectedNode, setSelectedNode] = useState<X6Node | null>(null);
-  const [activeTab, setActiveTab] = useState('Main Logic');
+  const [tabs, setTabs] = useState<Tab[]>([
+    { id: '1', name: 'Main Logic', graphData: null }
+  ]);
+  const [activeTabId, setActiveTabId] = useState('1');
+  const [editingTabId, setEditingTabId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -341,7 +352,7 @@ export const FlowEditor: React.FC = () => {
         connector: { name: 'rounded', args: { radius: 10 } },
         anchor: 'center',
         connectionPoint: 'anchor',
-        allowBlank: false,
+        allowBlank: true,
         allowLoop: false,
         allowNode: false,
         allowEdge: false,
@@ -461,6 +472,54 @@ export const FlowEditor: React.FC = () => {
       graph.dispose();
     };
   }, []);
+
+  const handleTabChange = (tabId: string) => {
+    if (!graphRef.current || tabId === activeTabId) return;
+
+    // Save current graph data
+    const currentData = graphRef.current.toJSON();
+    setTabs(prev => prev.map(tab =>
+      tab.id === activeTabId ? { ...tab, graphData: currentData } : tab
+    ));
+
+    // Load new tab data
+    const targetTab = tabs.find(t => t.id === tabId);
+    if (targetTab) {
+      graphRef.current.fromJSON(targetTab.graphData || { nodes: [], edges: [] });
+      setActiveTabId(tabId);
+      setSelectedNode(null);
+    }
+  };
+
+  const addTab = () => {
+    const newId = Date.now().toString();
+    const newTab: Tab = {
+      id: newId,
+      name: `New Flow ${tabs.length + 1}`,
+      graphData: null
+    };
+
+    // Save current graph data first
+    if (graphRef.current) {
+      const currentData = graphRef.current.toJSON();
+      setTabs(prev => [...prev.map(tab =>
+        tab.id === activeTabId ? { ...tab, graphData: currentData } : tab
+      ), newTab]);
+    } else {
+      setTabs(prev => [...prev, newTab]);
+    }
+
+    setActiveTabId(newId);
+    graphRef.current?.fromJSON({ nodes: [], edges: [] });
+    setSelectedNode(null);
+  };
+
+  const renameTab = (id: string, newName: string) => {
+    setTabs(prev => prev.map(tab =>
+      tab.id === id ? { ...tab, name: newName } : tab
+    ));
+    setEditingTabId(null);
+  };
 
   // Simulation effect
   useEffect(() => {
@@ -658,19 +717,44 @@ export const FlowEditor: React.FC = () => {
       </aside>
 
       <section className="flex-1 flex flex-col bg-background-dark relative z-10">
-        <div className="flex border-b border-border-dark bg-background-dark px-4 overflow-x-auto">
-          {['Main Logic', 'Motor Control', 'Safety System'].map(tab => (
-            <button 
-              key={tab}
-              onClick={() => setActiveTab(tab)}
+        <div className="flex border-b border-border-dark bg-background-dark px-4 overflow-x-auto items-center">
+          {tabs.map(tab => (
+            <div
+              key={tab.id}
               className={cn(
-                "flex items-center gap-2 px-4 py-3 border-b-2 text-sm font-bold whitespace-nowrap transition-all",
-                activeTab === tab ? "border-primary text-primary bg-primary/5" : "border-transparent text-slate-500 hover:text-slate-300"
+                "flex items-center gap-2 px-4 py-3 border-b-2 text-sm font-bold whitespace-nowrap transition-all group",
+                activeTabId === tab.id ? "border-primary text-primary bg-primary/5" : "border-transparent text-slate-500 hover:text-slate-300"
               )}
             >
-              {tab}
-            </button>
+              {editingTabId === tab.id ? (
+                <input
+                  autoFocus
+                  className="bg-surface-dark border border-primary rounded px-1 py-0.5 text-xs focus:outline-none"
+                  defaultValue={tab.name}
+                  onBlur={(e) => renameTab(tab.id, e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') renameTab(tab.id, (e.target as HTMLInputElement).value);
+                    if (e.key === 'Escape') setEditingTabId(null);
+                  }}
+                />
+              ) : (
+                <span
+                  onClick={() => handleTabChange(tab.id)}
+                  onDoubleClick={() => setEditingTabId(tab.id)}
+                  className="cursor-pointer"
+                >
+                  {tab.name}
+                </span>
+              )}
+            </div>
           ))}
+          <button
+            onClick={addTab}
+            className="p-2 text-slate-500 hover:text-primary transition-colors ml-2"
+            title="Add new flow"
+          >
+            <Plus className="size-4" />
+          </button>
         </div>
 
         <div 
@@ -686,86 +770,87 @@ export const FlowEditor: React.FC = () => {
           <button className="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary bg-primary/5">Properties</button>
           <button className="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-300">Debug</button>
         </div>
-        <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
-          {selectedNode ? (
-            <>
-              <section className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <Info className="size-4 text-primary" />
-                  <h4 className="text-xs font-bold text-primary uppercase tracking-wider">Node Information</h4>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-[10px]">
-                    <span className="text-slate-500 uppercase font-bold">Type</span>
-                    <span className="text-slate-300">{selectedNode.getData().type}</span>
+        <div className="flex-1 relative flex flex-col min-h-0">
+          <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar pb-32">
+            {selectedNode ? (
+              <>
+                <section className="bg-primary/5 border border-primary/20 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Info className="size-4 text-primary" />
+                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider">Node Information</h4>
                   </div>
-                  <div className="text-[10px]">
-                    <div className="text-slate-500 uppercase font-bold mb-1">Internal Operation</div>
-                    <div className="text-slate-300 leading-relaxed bg-black/20 p-2 rounded">{selectedNode.getData().operation}</div>
-                  </div>
-                  <div className="text-[10px]">
-                    <div className="text-slate-500 uppercase font-bold mb-1">Description</div>
-                    <div className="text-slate-400 italic leading-relaxed">{selectedNode.getData().description}</div>
-                  </div>
-                </div>
-              </section>
-
-              <section>
-                <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">General Settings</h4>
-                <div className="space-y-4">
-                  <PropertyField 
-                    label="Display Label" 
-                    value={editingData?.label || editingData?.name || ''} 
-                    onChange={(val) => handlePropertyChange('label', val)}
-                  />
-                  <PropertyField label="Node ID" value={selectedNode.id} readOnly />
-                </div>
-              </section>
-              {(selectedNode.shape === 'timer-node' || selectedNode.getData().category === 'Timer') && (
-                <section>
-                  <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">Timer Parameters</h4>
-                  <div className="space-y-4">
-                    <PropertyField 
-                      label="Preset Value (ms)" 
-                      value={(editingData?.preset || 5000).toString()} 
-                      onChange={(val) => handlePropertyChange('preset', val)}
-                    />
-                    <div className="p-3 bg-black/20 rounded border border-border-dark">
-                      <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Accumulated (ACC)</div>
-                      <div className="text-xl font-mono text-primary font-bold">{editingData?.acc || 0} ms</div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-[10px]">
+                      <span className="text-slate-500 uppercase font-bold">Type</span>
+                      <span className="text-slate-300">{selectedNode.getData().type}</span>
+                    </div>
+                    <div className="text-[10px]">
+                      <div className="text-slate-500 uppercase font-bold mb-1">Internal Operation</div>
+                      <div className="text-slate-300 leading-relaxed bg-black/20 p-2 rounded">{selectedNode.getData().operation}</div>
+                    </div>
+                    <div className="text-[10px]">
+                      <div className="text-slate-500 uppercase font-bold mb-1">Description</div>
+                      <div className="text-slate-400 italic leading-relaxed">{selectedNode.getData().description}</div>
                     </div>
                   </div>
                 </section>
-              )}
-              <div className="pt-4 flex flex-col gap-2">
-                <button 
-                  onClick={applyChanges}
-                  className="w-full py-2.5 bg-primary text-white rounded font-bold text-sm shadow-lg shadow-primary/10 hover:brightness-110 transition-all"
-                >
-                  Apply Changes
-                </button>
-                <div className="flex gap-2">
-                  <button className="flex-1 py-2 bg-surface-dark text-slate-400 rounded border border-border-dark text-xs font-bold flex items-center justify-center gap-2 hover:text-white transition-colors">
-                    <Copy className="size-3" /> Duplicate
-                  </button>
-                  <button 
-                    onClick={() => {
-                      if (selectedNode) {
-                        graphRef.current?.removeCell(selectedNode);
-                        setSelectedNode(null);
-                      }
-                    }}
-                    className="flex-1 py-2 bg-surface-dark text-slate-400 rounded border border-border-dark text-xs font-bold flex items-center justify-center gap-2 hover:text-signal-error transition-colors"
-                  >
-                    <Trash2 className="size-3" /> Delete
-                  </button>
-                </div>
+
+                <section>
+                  <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">General Settings</h4>
+                  <div className="space-y-4">
+                    <PropertyField 
+                      label="Display Label"
+                      value={editingData?.label || editingData?.name || ''}
+                      onChange={(val) => handlePropertyChange('label', val)}
+                    />
+                    <PropertyField label="Node ID" value={selectedNode.id} readOnly />
+                  </div>
+                </section>
+                {(selectedNode.shape === 'timer-node' || selectedNode.getData().category === 'Timer') && (
+                  <section>
+                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 border-b border-border-dark pb-1">Timer Parameters</h4>
+                    <div className="space-y-4">
+                      <PropertyField
+                        label="Preset Value (ms)"
+                        value={(editingData?.preset || 5000).toString()}
+                        onChange={(val) => handlePropertyChange('preset', val)}
+                      />
+                      <div className="p-3 bg-black/20 rounded border border-border-dark">
+                        <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Accumulated (ACC)</div>
+                        <div className="text-xl font-mono text-primary font-bold">{editingData?.acc || 0} ms</div>
+                      </div>
+                    </div>
+                  </section>
+                )}
+              </>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center text-center p-8">
+                <Settings className="size-12 text-slate-700 mb-4" />
+                <p className="text-sm text-slate-500">Select a node to view and edit its properties</p>
               </div>
-            </>
-          ) : (
-            <div className="h-full flex flex-col items-center justify-center text-center p-8">
-              <Settings className="size-12 text-slate-700 mb-4" />
-              <p className="text-sm text-slate-500">Select a node to view and edit its properties</p>
+            )}
+          </div>
+
+          {selectedNode && (
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-background-dark border-t border-border-dark flex items-center gap-2">
+              <button
+                onClick={applyChanges}
+                className="flex-1 py-2.5 bg-primary text-white rounded font-bold text-sm shadow-lg shadow-primary/10 hover:brightness-110 transition-all"
+              >
+                Apply Changes
+              </button>
+              <button
+                onClick={() => {
+                  if (selectedNode) {
+                    graphRef.current?.removeCell(selectedNode);
+                    setSelectedNode(null);
+                  }
+                }}
+                className="p-2.5 bg-signal-error/10 text-signal-error rounded border border-signal-error/20 hover:bg-signal-error hover:text-white transition-all group"
+                title="Delete Node"
+              >
+                <Trash2 className="size-4" />
+              </button>
             </div>
           )}
         </div>
@@ -781,30 +866,39 @@ const NodeCategory: React.FC<{
   onDoubleClick: (metadata: NodeMetadata) => void;
   onMouseEnter: (e: React.MouseEvent, metadata: NodeMetadata) => void;
   onMouseLeave: () => void;
-}> = ({ title, items, onDragStart, onDoubleClick, onMouseEnter, onMouseLeave }) => (
-  <div>
-    <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-3">
-      <Box className="size-3" />
-      {title}
-    </div>
-    <div className="grid grid-cols-1 gap-2">
-      {items.map((item, i) => (
-        <div 
-          key={i}
-          draggable
-          onDragStart={(e) => onDragStart(e, item)}
-          onDoubleClick={() => onDoubleClick(item)}
-          onMouseEnter={(e) => onMouseEnter(e, item)}
-          onMouseLeave={onMouseLeave}
-          className="flex items-center gap-3 p-3 bg-surface-dark/40 border border-border-dark rounded-lg cursor-grab hover:border-primary transition-all group active:cursor-grabbing select-none"
-        >
-          <item.icon className="size-4 text-primary shrink-0" />
-          <span className="text-sm font-medium text-slate-300 group-hover:text-white truncate">{item.name}</span>
+}> = ({ title, items, onDragStart, onDoubleClick, onMouseEnter, onMouseLeave }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  return (
+    <div>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-3 cursor-pointer hover:text-slate-300 transition-colors"
+      >
+        {isOpen ? <ChevronDown className="size-3" /> : <ChevronRight className="size-3" />}
+        {title}
+      </div>
+      {isOpen && (
+        <div className="grid grid-cols-1 gap-2">
+          {items.map((item, i) => (
+            <div
+              key={i}
+              draggable
+              onDragStart={(e) => onDragStart(e, item)}
+              onDoubleClick={() => onDoubleClick(item)}
+              onMouseEnter={(e) => onMouseEnter(e, item)}
+              onMouseLeave={onMouseLeave}
+              className="flex items-center gap-3 p-3 bg-surface-dark/40 border border-border-dark rounded-lg cursor-grab hover:border-primary transition-all group active:cursor-grabbing select-none"
+            >
+              <item.icon className="size-4 text-primary shrink-0" />
+              <span className="text-sm font-medium text-slate-300 group-hover:text-white truncate">{item.name}</span>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 const PropertyField: React.FC<{ 
   label: string; 
