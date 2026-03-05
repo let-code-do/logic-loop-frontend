@@ -1,7 +1,7 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, Download, FileJson, FileCode, CheckCircle2, Loader2, Monitor } from 'lucide-react';
-import { cn } from '../utils.js';
+import { cn } from '../utils';
 
 interface BuildExportModalProps {
   isOpen: boolean;
@@ -158,7 +158,7 @@ export const BuildExportModal: React.FC<BuildExportModalProps> = ({ isOpen, onCl
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                  <div className="mt-2 text-[10px] text-slate-500 uppercase tracking-widest">
+                  <div className="mt-2 text-[10px] font-mono text-slate-500 uppercase tracking-widest">
                     Progress: {Math.floor(progress)}%
                   </div>
                 </div>

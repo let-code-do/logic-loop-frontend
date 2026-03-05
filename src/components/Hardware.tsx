@@ -12,7 +12,7 @@ import {
   Database,
   Search
 } from 'lucide-react';
-import { cn } from '../utils.js';
+import { cn } from '../utils';
 
 export const Hardware: React.FC = () => {
   const [config, setConfig] = useState({
@@ -114,7 +114,7 @@ export const Hardware: React.FC = () => {
                   CONNECTED
                 </span>
                 <span className="text-slate-600 text-xs">•</span>
-                <span className="text-slate-500 text-[10px] uppercase tracking-widest">Protocol: TCP/IP Modbus</span>
+                <span className="text-slate-500 text-[10px] font-mono uppercase tracking-widest">Protocol: TCP/IP Modbus</span>
               </div>
             </div>
           </div>
@@ -222,7 +222,7 @@ export const Hardware: React.FC = () => {
                   <h3 className="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Diagnostic Log</h3>
                   <button className="text-[8px] text-slate-500 hover:text-white uppercase font-bold tracking-widest border border-border-dark px-2 py-1 rounded">Clear</button>
                 </div>
-                <div className="h-48 bg-background-dark rounded-lg p-3 text-[10px] overflow-y-auto custom-scrollbar space-y-1.5 border border-border-dark">
+                <div className="h-48 bg-background-dark rounded-lg p-3 font-mono text-[10px] overflow-y-auto custom-scrollbar space-y-1.5 border border-border-dark">
                   <LogLine time="14:02:30" type="INFO" msg="Handshake completed" color="text-signal-active" />
                   <LogLine time="14:02:31" type="INFO" msg="Session ID: 49202" color="text-signal-active" />
                   <LogLine time="14:02:32" type="WARN" msg="Jitter spike: 48ms" color="text-warning-orange" />
